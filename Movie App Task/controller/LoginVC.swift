@@ -103,7 +103,7 @@ class LoginVC: UIViewController {
 //            self.registerButton.setTitleColor(.gray, for: .normal)
 //        }
         
-        Services.services.getAccessToken(username: username, password: passowrd) { [weak self] (err) in
+        Services.services.getAccessToken(username: username, password: passowrd) { [weak self] (token,err) in
             if let err = err {
                 print(err)
             }
