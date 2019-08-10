@@ -16,7 +16,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        
+//        specificVC()
+        
+//        window?.rootViewController=LoginVC()
+//
+        window?.rootViewController = MainTabBarVC()
         return true
+    }
+    
+    func specificVC()  {
+        guard   let savedData = UserDefaults.standard.object(forKey: "auth") as? [String] else {  self.window?.rootViewController = LoginVC() ;return}
+        
+        
+        Services.services.getAccessToken(username: savedData[0], password: savedData[1]) { [weak self] (err) in
+               if let err = err {
+                self?.window?.rootViewController = LoginVC()
+                }
+            self?.window?.rootViewController = MainTabBarVC()
+            }
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
