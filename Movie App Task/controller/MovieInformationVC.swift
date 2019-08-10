@@ -20,7 +20,7 @@ class MovieInformationVC: UIViewController {
             releaseDateLabel.text = "Release date: \(movieDetails.releaseDate)"
             popularityLabel.text = "Popularity: \(movieDetails.popularity)"
             adultInfoLabel.text = "Adult Info: \(movieDetails.adult == true ? "Yes" : "No" )"
-             overviewLabel.text = "Overview : \(movieDetails.overview)"
+            overviewLabel.text = "Overview : \(movieDetails.overview)"
         }
     }
     
@@ -49,7 +49,9 @@ class MovieInformationVC: UIViewController {
         setupViews()
     }
     
-    func setupViews()  {
+    //MARK:-User methods
+    
+   fileprivate func setupViews()  {
         let mainLabels = [movieTitleLabel,voteAverageLabel,releaseDateLabel,popularityLabel,adultInfoLabel]
         mainLabels.forEach({$0.constrainHeight(constant: 30)})
         
@@ -60,7 +62,7 @@ class MovieInformationVC: UIViewController {
         view.addSubview(mainStack)
         
         mainStack.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 16, left: 8, bottom: 0, right: 8))
-      
+        
     }
     
     

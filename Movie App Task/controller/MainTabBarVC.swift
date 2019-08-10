@@ -16,14 +16,11 @@ class MainTabBarVC: UITabBarController {
         UINavigationBar.appearance().prefersLargeTitles = true
         
         setupViewControllers()
-       
+        
         
     }
     
-    //MARK: -USER METHODS
-    
-    
-   
+    //MARK:-User methods
     
     fileprivate func setupViewControllers() {
         
@@ -32,7 +29,7 @@ class MainTabBarVC: UITabBarController {
         let account = templateNavControllerVC(title: "Account", selectedImage: #imageLiteral(resourceName: "account"), rootViewController: AccountVC() )
         
         tabBar.tintColor = .black
-       
+        
         viewControllers = [
             topRated,
             account
@@ -47,10 +44,10 @@ class MainTabBarVC: UITabBarController {
     
     fileprivate func templateNavControllerVC(title: String,selectedImage:UIImage, rootViewController: UIViewController ) -> UINavigationController {
         let navController = UINavigationController(rootViewController: rootViewController)
-         rootViewController.navigationItem.title = title
+        rootViewController.navigationItem.title = title
         rootViewController.navigationController?.navigationBar.prefersLargeTitles = false
         navController.tabBarItem.title = title
-      
+        
         navController.tabBarItem.image = selectedImage
         return navController
     }

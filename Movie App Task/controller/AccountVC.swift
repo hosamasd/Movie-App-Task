@@ -10,14 +10,15 @@ import UIKit
 import SDWebImage
 
 class AccountVC: UIViewController {
-
+    
     let baseGravtarlink = "https://www.gravatar.com/avatar/"
+    var userInfoDetails: UserDefaults?
     
     var user:UserDetailsModel?
-       
+    
     let avatarUserImageView:UIImageView = {
         let im = UIImageView(backgroundColor: .gray)
-         im.contentMode = .scaleAspectFit
+        im.contentMode = .scaleAspectFit
         im.clipsToBounds = true
         im.layer.cornerRadius = 50
         im.constrainHeight(constant: 100)
@@ -36,18 +37,22 @@ class AccountVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         
         setupViews()
+        addTextUsingCachedDetails()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getUserDetails()
+                getUserDetails()     //for get data using api
+        addTextUsingCachedDetails() // get data from cached
     }
     
-    func setupViews()  {
-         view.backgroundColor = .lightGray
+    //MARK:-User methods
+    
+   fileprivate func setupViews()  {
+        view.backgroundColor = .lightGray
         let mainLabels = [userIDLabel,userISOLabel,userISO2Label,userNameLabel,userAdultLabel,userNameInfoLabel]
         mainLabels.forEach({$0.constrainHeight(constant: 40)})
         
@@ -59,8 +64,8 @@ class AccountVC: UIViewController {
         mainStack.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 8, left: 8, bottom: 0, right: 8))
     }
     
-    func getUserDetails()  {
-
+  fileprivate  func getUserDetails()  {
+        
         Services.services.getUserInfo { [weak self] (user, err) in
             guard let user = user else {return}
             self?.user = user
@@ -71,7 +76,7 @@ class AccountVC: UIViewController {
         }
     }
     
-    func addText(_ user: UserDetailsModel)  {
+  fileprivate  func addText(_ user: UserDetailsModel)  {
         guard let url = URL(string: baseGravtarlink + user.avatar.gravatar.hash) else { return  }
         avatarUserImageView.sd_setImage(with: url)
         userIDLabel.text = "ID: \(user.id)"
@@ -80,5 +85,38 @@ class AccountVC: UIViewController {
         userNameLabel.text = "name: \(user.name )"
         userNameInfoLabel.text = "username: \(user.username)"
         userAdultLabel.text = "include_adult: \(user.includeAdult == true ? "Yes" : "No")"
+        
+        cachedData(user)
     }
+    
+  fileprivate  func addTextUsingCachedDetails()  {
+        
+        if let data = UserDefaults.standard.value(forKey: "userInfo") as? [String: Any] {
+            userIDLabel.text = "ID: \(data["id"] as? Int ?? 0)"
+            userISOLabel.text = "iso_639_1: \(data["iso639_1"] as? String ?? "")"
+            userISO2Label.text = "iso_3166_1: \(data["iso_3166_1"] as? String ?? "")"
+            userNameLabel.text = "name: \(data["name"] as? String ?? "" )"
+            userNameInfoLabel.text = "username: \(data["username"] as? String ?? "")"
+            userAdultLabel.text = "include_adult: \(data["includeAdult"] as? Bool == true ? "Yes" : "No")"
+            
+        }
+    }
+    
+  fileprivate  func cachedData(_ user: UserDetailsModel)  {
+        let datas: [String:Any] = ["id": user.id,
+                                   "gravatar": user.avatar.gravatar.hash,
+                                   "includeAdult": user.includeAdult,
+                                   "iso3166_1": user.iso3166_1,
+                                   "iso639_1": user.iso639_1,
+                                   "username": user.username,
+                                   "name": user.name,
+                                   
+                                   ]
+        let defaults    = UserDefaults.standard
+        defaults.set(datas, forKey: "userInfo")
+        defaults.synchronize()
+        
+        
+    }
+    
 }

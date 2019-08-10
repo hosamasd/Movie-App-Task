@@ -43,7 +43,9 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
         navigationController?.pushViewController(movieInfo, animated: true)
     }
     
-    func fetchData()  {
+    //MARK:-User methods
+    
+  fileprivate  func fetchData()  {
         Services.services.getTopRatedMovies { [weak self] (rated, err) in
             if let err = err {
                 print(err.localizedDescription)
@@ -56,7 +58,7 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
         }
     }
     
-    func setupCollection()  {
+  fileprivate  func setupCollection()  {
         collectionView.backgroundColor = .white
         collectionView.register(TopRatedCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.contentInset.top = 8

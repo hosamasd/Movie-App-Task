@@ -10,12 +10,12 @@ import UIKit
 import Alamofire
 
 class LoginVC: UIViewController {
-
-     fileprivate let apiKey = "9e4052475425b472866635831745fe22"
-     let gradiantLayer = CAGradientLayer()
+    
+    fileprivate let apiKey = "9e4052475425b472866635831745fe22"
+    let gradiantLayer = CAGradientLayer()
     lazy var usernameTextField:CustomTextField = {
         let tf = CustomTextField(padding: 16, height: 50)
-//        tf.keyboardType = .emailAddress
+        //        tf.keyboardType = .emailAddress
         tf.placeholder = "enter your email"
         tf.text = "hosam_dsa"
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
@@ -32,8 +32,8 @@ class LoginVC: UIViewController {
     }()
     lazy var loginButton:UIButton = {
         let bt = UIButton(title: "Login", titleColor: .white, font: .systemFont(ofSize: 20, weight: .heavy), backgroundColor: .lightGray, target: self, action: #selector(handleLogin))
-//        bt.setTitleColor(.gray, for: .disabled)
-//        bt.isEnabled = false
+        //        bt.setTitleColor(.gray, for: .disabled)
+        //        bt.isEnabled = false
         bt.backgroundColor = #colorLiteral(red: 0.8273344636, green: 0.09256268293, blue: 0.324395299, alpha: 1)
         bt.setTitleColor(.white, for: .normal)
         bt.layer.cornerRadius = 22
@@ -56,28 +56,21 @@ class LoginVC: UIViewController {
         // Do any additional setup after loading the view.
         setupGradiantLayer()
         setupViews()
-        requestToken()
-    }
-
-    func requestToken()  {
-
-       
-        
-
-      
         
     }
     
-    func setupViews()  {
+    //MARK:-User methods
+    
+    fileprivate  func setupViews()  {
         view.backgroundColor = .white
         
         view.addSubview(verticalStackView)
-      
+        
         
         verticalStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         verticalStackView.centerYInSuperview()
     }
-
+    
     fileprivate  func setupGradiantLayer()  {
         
         let topColor = #colorLiteral(red: 0.989370048, green: 0.3686362505, blue: 0.3827736974, alpha: 1)
@@ -89,19 +82,27 @@ class LoginVC: UIViewController {
         gradiantLayer.frame = view.bounds
     }
     
+    fileprivate func animateView(){
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+            self.view.transform = .identity
+        })
+    }
+    
+    //TODO:Handle methods
+    
     @objc  func handleLogin()  {
         self.handleDismissKeyboard()
         
         guard let username = usernameTextField.text , !username.isEmpty,
             let passowrd = passwordTextField.text, !passowrd.isEmpty else { return  }
         
-//        if isValid {
-//            self.registerButton.backgroundColor = #colorLiteral(red: 0.8273344636, green: 0.09256268293, blue: 0.324395299, alpha: 1)
-//            self.registerButton.setTitleColor(.white, for: .normal)
-//        }else {
-//            self.registerButton.backgroundColor = UIColor.lightGray
-//            self.registerButton.setTitleColor(.gray, for: .normal)
-//        }
+        //        if isValid {
+        //            self.registerButton.backgroundColor = #colorLiteral(red: 0.8273344636, green: 0.09256268293, blue: 0.324395299, alpha: 1)
+        //            self.registerButton.setTitleColor(.white, for: .normal)
+        //        }else {
+        //            self.registerButton.backgroundColor = UIColor.lightGray
+        //            self.registerButton.setTitleColor(.gray, for: .normal)
+        //        }
         
         Services.services.getAccessToken(username: username, password: passowrd) { [weak self] (token,err) in
             if let err = err {
@@ -113,9 +114,9 @@ class LoginVC: UIViewController {
         
     }
     
-   @objc func handleTextChange(text: UITextField) ->Bool {
+    @objc func handleTextChange(text: UITextField) ->Bool {
         guard let text = text.text, !text.isEmpty else { return false }
-    return true
+        return true
     }
     
     @objc func handleDismissKeyboard()  {
@@ -124,11 +125,7 @@ class LoginVC: UIViewController {
         animateView()
     }
     
-    fileprivate func animateView(){
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
-            self.view.transform = .identity
-        })
-    }
+   
     
 }
 

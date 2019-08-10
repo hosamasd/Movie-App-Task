@@ -62,7 +62,6 @@ class Services {
         guard let urls = URL( string: "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=9e4052475425b472866635831745fe22") else { return  }
         
         
-        let headers = ["content-type": "application/json"]
         let parameters = [
             "username": username,
             "password": password,
@@ -93,7 +92,7 @@ class Services {
         
     }
     
-    func makeGenricGet<T:Codable>(url:URL,completion: @escaping (T?, Error?)->())  {
+    func makeGenericGet<T:Codable>(url:URL,completion: @escaping (T?, Error?)->())  {
         
         URLSession.shared.dataTask(with: url) { (data, res, err) in
             guard let data = data else {return}
@@ -121,7 +120,7 @@ class Services {
             let urlString = "https://api.themoviedb.org/3/account?session_id=\(sessions)&api_key=\(apiKeys)"
             guard let url = URL(string: urlString) else {return}
             
-            self?.makeGenricGet(url: url, completion: completion)
+            self?.makeGenericGet(url: url, completion: completion)
         }
     }
     
@@ -130,7 +129,7 @@ class Services {
     func getTopRatedMovies(completion: @escaping ( TopRatedModel?,Error?)->())  {
         let topRated = "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)&language=en-US&page=1"
         guard let url = URL(string: topRated) else { return  }
-        makeGenricGet(url: url, completion: completion)
+        makeGenericGet(url: url, completion: completion)
         
     }
 }
