@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,25 +20,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-//        specificVC()
+        specificVC()
         
-        window?.rootViewController=LoginVC()
+       
 //
-//        window?.rootViewController = MainTabBarVC()
+       
         return true
     }
     
     func specificVC()  {
-        guard   let savedData = UserDefaults.standard.object(forKey: "auth") as? [String] else {  self.window?.rootViewController = LoginVC() ;return}
-        
-        
-        Services.services.getAccessToken(username: savedData[0], password: savedData[1]) { [weak self] (token,err) in
-               if let err = err {
-                self?.window?.rootViewController = LoginVC()
-                }
-            self?.window?.rootViewController = MainTabBarVC()
-            }
-        
+      
+        if Defaults[.islogin] == true {
+            window?.rootViewController = MainTabBarVC()
+        }else {
+               window?.rootViewController=LoginVC()
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

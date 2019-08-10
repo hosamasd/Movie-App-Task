@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyUserDefaults
 
 class LoginVC: UIViewController {
     
@@ -54,6 +55,7 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+//        checkLoginState()
         setupGradiantLayer()
         setupViews()
        
@@ -61,6 +63,10 @@ class LoginVC: UIViewController {
     }
     
     //MARK:-User methods
+    
+    func checkLoginState()  {
+        
+    }
     
     fileprivate  func setupViews()  {
         view.backgroundColor = .white
@@ -117,6 +123,11 @@ class LoginVC: UIViewController {
             if let err = err {
                 print(err)
             }
+            
+            Defaults[.username] = username
+            Defaults[.password] = passowrd
+            Defaults[.islogin] = true
+            
             let mainBar = MainTabBarVC()
             self?.present(mainBar, animated: true, completion: nil)
         }
@@ -138,3 +149,10 @@ class LoginVC: UIViewController {
     
 }
 
+
+extension DefaultsKeys{
+    
+    static let username = DefaultsKey<String?>("username")
+    static let password = DefaultsKey<String?>("password")
+    static let islogin = DefaultsKey<Bool?>("islogin")
+}
