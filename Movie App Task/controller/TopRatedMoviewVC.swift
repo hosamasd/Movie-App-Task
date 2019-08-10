@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellID"
     var moviesRatedArray = [Result]()
+     var progressHUDs = JGProgressHUD(style: .dark)
+    let infoLabel = UILabel(text: "please wait until data reterived", font: .systemFont(ofSize: 25), textColor: .black, textAlignment: .center)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,10 +49,17 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
     //MARK:-User methods
     
   fileprivate  func fetchData()  {
+    
+    progressHUDs.textLabel.text = "fetching data Wait!"
+    progressHUDs.show(in: self.view)
+    
         Services.services.getTopRatedMovies { [weak self] (rated, err) in
             if let err = err {
                 print(err.localizedDescription)
+                self?.progressHUDs.textLabel.text = err.localizedDescription
+                self?.progressHUDs.show(in: self!.view)
             }
+            self?.hideData()
             guard let rated = rated else {return}
             self?.moviesRatedArray = rated.results
             DispatchQueue.main.async {
@@ -58,9 +68,21 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
         }
     }
     
+    func hideData()  {
+        progressHUDs.dismiss()
+        DispatchQueue.main.async {
+            self.infoLabel.alpha = 0
+        }
+        
+    }
   fileprivate  func setupCollection()  {
         collectionView.backgroundColor = .white
         collectionView.register(TopRatedCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.contentInset.top = 8
+   
+    collectionView.addSubview(infoLabel)
+    infoLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 8, left: 8, bottom: 0, right: 8))
+   
+    
     }
 }

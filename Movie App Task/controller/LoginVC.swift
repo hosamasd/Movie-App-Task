@@ -56,7 +56,8 @@ class LoginVC: UIViewController {
         // Do any additional setup after loading the view.
         setupGradiantLayer()
         setupViews()
-        
+       
+        setupGestures()
     }
     
     //MARK:-User methods
@@ -88,7 +89,15 @@ class LoginVC: UIViewController {
         })
     }
     
+    fileprivate func setupGestures()  {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismissKeyboard)))
+    }
+    
+   
+    
     //TODO:Handle methods
+    
+  
     
     @objc  func handleLogin()  {
         self.handleDismissKeyboard()
