@@ -11,7 +11,7 @@ import UIKit
 class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellID"
-    var moviesArray = [Result]()
+    var moviesRatedArray = [Result]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +20,12 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return moviesArray.count
+        return moviesRatedArray.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! TopRatedCell
-        let moview = moviesArray[indexPath.item]
+        let moview = moviesRatedArray[indexPath.item]
         
         cell.movie = moview
         return cell
@@ -35,13 +35,21 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
         return .init(width: view.frame.width, height: 220)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = moviesRatedArray[indexPath.item]
+        
+        let movieInfo = MovieInformationVC()
+        movieInfo.movieDetails = movie
+        navigationController?.pushViewController(movieInfo, animated: true)
+    }
+    
     func fetchData()  {
-        Services.services.getUpComingMovies { [weak self] (coming, err) in
+        Services.services.getTopRatedMovies { [weak self] (rated, err) in
             if let err = err {
                 print(err.localizedDescription)
             }
-            guard let coming = coming else {return}
-            self?.moviesArray = coming.results
+            guard let rated = rated else {return}
+            self?.moviesRatedArray = rated.results
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }

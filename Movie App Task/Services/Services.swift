@@ -91,17 +91,38 @@ class Services {
             })
     }
     
-    func getUpComingMovies(completion: @escaping ( UpComingMoviesModel?,Error?)->())  {
-        let upComingMoviesUrl = "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)&language=en-US&page=1"
+//    func getUpComingMovies(completion: @escaping ( TopRatedModel?,Error?)->())  {
+//        let upComingMoviesUrl = "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)&language=en-US&page=1"
+//
+//        guard let url = URL(string: upComingMoviesUrl) else { return  }
+//       URLSession.shared.dataTask(with: url) { (data, res, err) in
+//            guard let data = data else {return}
+//
+//            do {
+//                let comingMovie = try JSONDecoder().decode(TopRatedModel.self, from: data)
+//                // success
+//                completion(comingMovie,nil)
+//
+//            } catch let err {
+//                completion(nil,err)
+//
+//            }
+//            }.resume()
+//
+//    }
+    
+    func getTopRatedMovies(completion: @escaping ( TopRatedModel?,Error?)->())  {
+        let topRated = "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)&language=en-US&page=1"
         
-        guard let url = URL(string: upComingMoviesUrl) else { return  }
-       URLSession.shared.dataTask(with: url) { (data, res, err) in
+       
+        guard let url = URL(string: topRated) else { return  }
+        URLSession.shared.dataTask(with: url) { (data, res, err) in
             guard let data = data else {return}
             
             do {
-                let comingMovie = try JSONDecoder().decode(UpComingMoviesModel.self, from: data)
+                let ratedMovie = try JSONDecoder().decode(TopRatedModel.self, from: data)
                 // success
-                completion(comingMovie,nil)
+                completion(ratedMovie,nil)
                 
             } catch let err {
                 completion(nil,err)
