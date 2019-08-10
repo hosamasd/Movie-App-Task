@@ -47,9 +47,10 @@ class MainTabBarVC: UITabBarController {
     
     fileprivate func templateNavControllerVC(title: String,selectedImage:UIImage, rootViewController: UIViewController ) -> UINavigationController {
         let navController = UINavigationController(rootViewController: rootViewController)
-        navigationController?.navigationBar.prefersLargeTitles = true
-        rootViewController.navigationItem.title = title
+         rootViewController.navigationItem.title = title
+        rootViewController.navigationController?.navigationBar.prefersLargeTitles = false
         navController.tabBarItem.title = title
+      
         navController.tabBarItem.image = selectedImage
         return navController
     }
