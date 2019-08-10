@@ -285,7 +285,7 @@ extension UIStackView {
 }
 
 extension UIViewController {
-        func getStack(views: UIView...,spacing:CGFloat,distribution:UIStackView.Distribution,axis:NSLayoutConstraint.Axis) -> UIStackView {
+        func getStack(views: UIView...,spacing:CGFloat,distribution:UIStackView.Distribution = .fill,axis:NSLayoutConstraint.Axis) -> UIStackView {
             let stack = UIStackView(arrangedSubviews: views)
             stack.spacing = spacing
             stack.distribution = distribution
