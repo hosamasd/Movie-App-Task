@@ -23,6 +23,13 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
         fetchData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let categories = DataCaching.sharedInstance.cached["RatedMovies"] {
+            self.moviesRatedArray = categories as! [Result]
+        }
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return moviesRatedArray.count
     }
@@ -63,19 +70,20 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
             self?.hideData()
             guard let rated = rated else {return}
             self?.moviesRatedArray = rated.results
+            DataCaching.sharedInstance.cached["RatedMovies"] = rated.results // caching data
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
         }
     }
     
-    func hideData()  {
+   fileprivate func hideData()  {
         progressHUDs.dismiss()
         DispatchQueue.main.async {
             self.infoLabel.alpha = 0
         }
-        
-    }
+   }
+    
   fileprivate  func setupCollection()  {
         collectionView.backgroundColor = .white
         collectionView.register(TopRatedCell.self, forCellWithReuseIdentifier: cellID)
@@ -84,6 +92,5 @@ class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlow
     collectionView.addSubview(infoLabel)
     infoLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 8, left: 8, bottom: 0, right: 8))
    
-    
-    }
+   }
 }
