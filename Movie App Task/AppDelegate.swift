@@ -20,20 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-        specificVC()
-        
-       
-//
-       
+        checkLoginState()
+     
         return true
     }
     
-    func specificVC()  {
+    func checkLoginState()  {
       
         if Defaults[.islogin] == true {
             window?.rootViewController = MainTabBarVC()
         }else {
-               window?.rootViewController=LoginVC()
+               window?.rootViewController = LoginVC()
         }
     }
 

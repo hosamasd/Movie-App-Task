@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SystemConfiguration
 
 class Services {
     static let services = Services()
@@ -30,9 +31,9 @@ class Services {
                 
                 self.validateLogin(request_Token: token, username: username, password: password, completion: completion)
                 
-            } catch  {
-                
-                self.validateLogin( username: username, password: password, completion: completion)
+            } catch let err {
+                print(err.localizedDescription)
+//                self.validateLogin( username: username, password: password, completion: completion)
             }
             }.resume()
         
@@ -47,10 +48,13 @@ class Services {
                 switch res.result {
                 case .success:
                     let datas = res.result.value as? [String:Any]
+                    if datas?["success"] as? Bool ==  true{
                     guard let values = datas?["\(value)"] as? String else {return}
                     print("my token is ",values)
                     completion(values,nil)
-                    
+                    }else  {
+                        completion(nil, nil)
+                    }
                 case .failure(let err):
                     print(err)
                     completion(nil,err)
@@ -131,5 +135,34 @@ class Services {
         guard let url = URL(string: topRated) else { return  }
         makeGenericGet(url: url, completion: completion)
         
+
     }
+    
+    
+    
+    // check internet avaiable or not
+    func isInternetAvailable() -> Bool
+    {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
+    }
+    
 }
+
+
+

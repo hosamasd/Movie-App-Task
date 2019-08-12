@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 
+
 class TopRatedMoviewVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellID"

@@ -40,7 +40,8 @@ class AccountVC: UIViewController {
         
         
         setupViews()
-        addTextUsingCachedDetails()
+        checkInternet()
+//        addTextUsingCachedDetails()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +51,16 @@ class AccountVC: UIViewController {
     }
     
     //MARK:-User methods
+    
+    func checkInternet()  {
+        if Services.services.isInternetAvailable() {
+            // internet is find
+            getUserDetails()
+        }else {
+            // no internet
+            addTextUsingCachedDetails()
+        }
+    }
     
    fileprivate func setupViews()  {
         view.backgroundColor = .lightGray
@@ -92,6 +103,9 @@ class AccountVC: UIViewController {
   fileprivate  func addTextUsingCachedDetails()  {
         
         if let data = UserDefaults.standard.value(forKey: "userInfo") as? [String: Any] {
+             let urlString = "\(baseGravtarlink)\(user?.avatar.gravatar.hash)"  
+            avatarUserImageView.loadImageUsingCacheWithUrlString(urlString)
+            
             userIDLabel.text = "ID: \(data["id"] as? Int ?? 0)"
             userISOLabel.text = "iso_639_1: \(data["iso639_1"] as? String ?? "")"
             userISO2Label.text = "iso_3166_1: \(data["iso_3166_1"] as? String ?? "")"

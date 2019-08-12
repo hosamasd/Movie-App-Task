@@ -9,8 +9,12 @@
 import UIKit
 import Alamofire
 import SwiftyUserDefaults
+import JGProgressHUD
 
 class LoginVC: UIViewController {
+    
+    
+    var progressHUDs = JGProgressHUD(style: .dark)
     
     fileprivate let apiKey = "9e4052475425b472866635831745fe22"
     let gradiantLayer = CAGradientLayer()
@@ -64,9 +68,6 @@ class LoginVC: UIViewController {
     
     //MARK:-User methods
     
-    func checkLoginState()  {
-        
-    }
     
     fileprivate  func setupViews()  {
         view.backgroundColor = .white
@@ -99,17 +100,33 @@ class LoginVC: UIViewController {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismissKeyboard)))
     }
     
-   
+    func invalidInformation(message:String)  {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default)
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+       
+    }
     
+    func errorInfo(err: Error)  {
+        progressHUDs.textLabel.text = err.localizedDescription
+            progressHUDs.show(in: self.view)
+        progressHUDs.dismiss(afterDelay: 3)
+    }
     //TODO:Handle methods
     
   
     
     @objc  func handleLogin()  {
+        
+        progressHUDs.textLabel.text = "Please Wait....."
+        progressHUDs.show(in: self.view)
+        
         self.handleDismissKeyboard()
         
         guard let username = usernameTextField.text , !username.isEmpty,
-            let passowrd = passwordTextField.text, !passowrd.isEmpty else { return  }
+            let passowrd = passwordTextField.text, !passowrd.isEmpty else {invalidInformation(message: "Empty fields Not Allowed!"); return  }
         
         //        if isValid {
         //            self.registerButton.backgroundColor = #colorLiteral(red: 0.8273344636, green: 0.09256268293, blue: 0.324395299, alpha: 1)
@@ -121,14 +138,18 @@ class LoginVC: UIViewController {
         
         Services.services.getAccessToken(username: username, password: passowrd) { [weak self] (token,err) in
             if let err = err {
-                print(err)
+                self?.errorInfo(err: err)
             }
+            
+            guard let token = token else {self?.invalidInformation(message: "username or password is invalid!");self?.progressHUDs.dismiss();return}
+           self?.progressHUDs.dismiss()
             
             Defaults[.username] = username
             Defaults[.password] = passowrd
             Defaults[.islogin] = true
             
             let mainBar = MainTabBarVC()
+            
             self?.present(mainBar, animated: true, completion: nil)
         }
         
