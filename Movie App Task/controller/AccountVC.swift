@@ -103,9 +103,13 @@ class AccountVC: UIViewController {
   fileprivate  func addTextUsingCachedDetails()  {
         
         if let data = UserDefaults.standard.value(forKey: "userInfo") as? [String: Any] {
-             let urlString = "\(baseGravtarlink)\(user?.avatar.gravatar.hash)"  
-            avatarUserImageView.loadImageUsingCacheWithUrlString(urlString)
+             let urlString = "\(baseGravtarlink)\(user?.avatar.gravatar.hash))"
+////            let urlString = "\(baseGravtarlink)\(String(describing: user?.avatar.gravatar.hash))"
+//            avatarUserImageView.loadImageUsingCacheWithUrlString(urlString)
+            guard let url = URL(string: urlString) else { return  }
+            avatarUserImageView.sd_setImage(with: url)
             
+           
             userIDLabel.text = "ID: \(data["id"] as? Int ?? 0)"
             userISOLabel.text = "iso_639_1: \(data["iso639_1"] as? String ?? "")"
             userISO2Label.text = "iso_3166_1: \(data["iso_3166_1"] as? String ?? "")"
