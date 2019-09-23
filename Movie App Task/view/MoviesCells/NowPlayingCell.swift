@@ -11,23 +11,23 @@ import UIKit
 class NowPlayingCell: MovieCell {
    
     
-    func fetchMovie() {
-        
-        
-        
-        Services.services.fetchNowPlaying() { [weak self ] (movie, err) in
-            if let err = err {
-                print(err.localizedDescription)
-                return
-            }
-            
-            guard let movies = movie?.results else {return}
-            self?.movieArray = movies
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-            
-        }
-    }
+//    func fetchMovie() {
+//        
+//        
+//        
+//        Services.services.fetchNowPlaying() { [weak self ] (movie, err) in
+//            if let err = err {
+//                print(err.localizedDescription)
+//                return
+//            }
+//            
+//            guard let movies = movie?.results else {return}
+//            self?.movieArray = movies
+//            DispatchQueue.main.async {
+//                self?.collectionView.reloadData()
+//            }
+//            
+//        }
+//    }
    
 }

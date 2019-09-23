@@ -11,7 +11,7 @@ import SDWebImage
 
 class MovieInformationVC: UIViewController {
     
-    var movieDetails:Result! {
+    var movieDetails:Results! {
         didSet{
             guard let url = URL(string: "http://image.tmdb.org/t/p/original/\(movieDetails.posterPath)") else { return }
             movieImageView.sd_setImage(with: url)

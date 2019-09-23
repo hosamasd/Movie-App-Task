@@ -17,7 +17,7 @@ class Services {
     
     func getInfoMovie(url: String,completion: @escaping ( MovieModel?,Error?)->())  {
         
-         guard let urls = URL(string: url) else { return  }
+        guard let urls = URL(string: url) else{return}
         
         URLSession.shared.dataTask(with: urls) { (data, res, err) in
             guard let data = data else {return}
@@ -34,27 +34,35 @@ class Services {
                 
             }
             }.resume()
+    
     }
     
     func fetchNowPlaying(completion: @escaping ( MovieModel?,Error?)->())  {
-        let urlString = " https://api.themoviedb.org/3/movie/now_playing?api_key=9e4052475425b472866635831745fe22&language=en-US&page=1"
-        getInfoMovie(url: urlString, completion: completion)
+        let urlString = "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)&language=en-US&page=1"
+       
+        guard let urls = URL(string: urlString) else{return}
+         makeGenericGet(url: urls, completion: completion)
+//        getInfoMovie(url: urlString, completion: completion)
+       
     }
     
     func fetchUpComing(completion: @escaping ( MovieModel?,Error?)->())  {
-        let urlString = " https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)&language=en-US&page=1"
+        let urlString = "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)&language=en-US&page=1"
         getInfoMovie(url: urlString, completion: completion)
     }
     
     func fetchPopular(completion: @escaping ( MovieModel?,Error?)->())  {
          let urlString = "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)&language=en-US&page=1"
-        getInfoMovie(url: urlString, completion: completion)
+        guard let urls = URL(string: urlString) else{return}
+        makeGenericGet(url: urls, completion: completion)
+//        getInfoMovie(url: urlString, completion: completion)
     }
     
     func fetchLatest(completion: @escaping ( MovieModel?,Error?)->())  {
-        let url = "https://api.themoviedb.org/3/movie/latest?api_key=\(apiKey)&language=en-US"
-        
-        getInfoMovie(url: url, completion: completion)
+        let urlString = "https://api.themoviedb.org/3/movie/latest?api_key=\(apiKey)&language=en-US"
+        guard let urls = URL(string: urlString) else{return}
+        makeGenericGet(url: urls, completion: completion)
+//        getInfoMovie(url: url, completion: completion)
     }
     
     func makeGenericGet<T:Codable>(url:URL,completion: @escaping (T?, Error?)->())  {

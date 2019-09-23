@@ -10,7 +10,7 @@ import UIKit
 
 struct MovieModel: Codable {
     
-    let results: [Result]
+    let results: [Results]
     let page, totalResults: Int
     let totalPages: Int
     
@@ -21,7 +21,7 @@ struct MovieModel: Codable {
     }
 }
 
-struct Result: Codable {
+struct Results: Codable {
     let voteCount, id: Int
     let video: Bool
     let voteAverage: Double

@@ -11,7 +11,7 @@ import SDWebImage
 
 class MovieDetailsCell: BaseCell {
     
-    var movie:Result! {
+    var movie:Results! {
         didSet{
             guard let url = URL(string: "http://image.tmdb.org/t/p/original/\(movie.posterPath)") else { return }
             movieImageView.sd_setImage(with: url)

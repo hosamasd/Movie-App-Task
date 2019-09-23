@@ -19,22 +19,20 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     let popular = "popular"
      let topRated = "topRated"
     let latest = "latest"
-    var moviesRatedArray = [Result]()
+    var moviesRatedArray = [Results]()
     var dummyTitleHeader = ["Now Playing","UpComing","Popular","Top Rated","Latest"]
+    
+    var moviesArrayResults = [MovieModel]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollection()
-        
-    }
-    
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return dummyTitleHeader.count
+        fetchData()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return moviesArrayResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -43,60 +41,87 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     
     
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind:
-        String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier:
-            headerId, for: indexPath) as! HeaderCell
-        header.movieMainTitleLabel.text = dummyTitleHeader[indexPath.section]
-        return header
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let identifier: String
        
-       
-       
-        if indexPath.section == 1 {
-            identifier = upComing
-        } else if indexPath.section == 2 {
-            identifier = popular
-        }else if indexPath.section == 3 {
-            identifier = topRated
-        }else if indexPath.section == 4 {
-            identifier = latest
-        }  else {
-             identifier = cellId
-        }
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MovieCell
-     
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MovieCell
+        let movie = moviesArrayResults[indexPath.item]
+        
+        cell.titleLabel.text = dummyTitleHeader[indexPath.item]
+        cell.horizentalCollectionView.movieArray = movie
+        cell.horizentalCollectionView.collectionView.reloadData()
         return cell
     }
     
+    func fetchData()  {
+       
+        
+        var group1:MovieModel?
+        var group2:MovieModel?
+        var group3:MovieModel?
+//        var group4:MovieModel?
+
+        let disptachGroup = DispatchGroup()
+
+        disptachGroup.enter()
+        Services.services.fetchNowPlaying { (movie, err) in
+            disptachGroup.leave()
+
+            group1 = movie
+        }
+
+
+        disptachGroup.enter()
+        Services.services.fetchUpComing { (movie, err) in
+            disptachGroup.leave()
+
+            group2 = movie
+        }
+        disptachGroup.enter()
+        Services.services.fetchPopular { (movie, err) in
+            disptachGroup.leave()
+
+            group3 = movie
+        }
+
+
+//        disptachGroup.enter()
+//        print(32432)
+//        Services.services.fetchLatest { (movie, err) in
+//            disptachGroup.leave()
+//
+//            group4 = movie
+//        }
+
+
+        // when finish
+        disptachGroup.notify(queue: .main) {
+
+//            self.activityIndicator.stopAnimating()
+
+            if let group = group1 {
+                self.moviesArrayResults.append(group)
+            }
+            if let group = group2 {
+                self.moviesArrayResults.append(group)
+            }
+            if let group = group3 {
+                self.moviesArrayResults.append(group)
+            }
+//            if let group = group4 {
+//                self.moviesArrayResults.append(group)
+//            }
+
+            self.collectionView.reloadData()
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 250)
+        return .init(width: view.frame.width, height: 300)
     }
     
     
     //MARK:-User methods
-    
-//    fileprivate  func fetchData()  {
-//        
-//        Services.services.getTopRatedMovies { [weak self] (rated, err) in
-//            if let err = err {
-//                print(err.localizedDescription)
-//            }
-//            guard let rated = rated else {return}
-//            self?.moviesRatedArray = rated.results
-//            DataCaching.sharedInstance.cached["RatedMovies"] = rated.results // caching data
-//            DispatchQueue.main.async {
-//                self?.collectionView.reloadData()
-//            }
-//        }
-//    }
-//    
     
     
     fileprivate  func setupCollection()  {
@@ -104,11 +129,6 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         collectionView.contentInset.top = 8
         
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(UpComingCell.self, forCellWithReuseIdentifier: upComing)
-        collectionView.register(TopRatedCell.self, forCellWithReuseIdentifier: topRated)
-        collectionView.register(NowPlayingCell.self, forCellWithReuseIdentifier: nowPlaying)
-        collectionView.register(PopluarCell.self, forCellWithReuseIdentifier: popular)
-        collectionView.register(LatestCell.self, forCellWithReuseIdentifier: latest)
         collectionView.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
     }
