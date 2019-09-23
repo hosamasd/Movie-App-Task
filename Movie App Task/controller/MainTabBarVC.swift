@@ -25,7 +25,8 @@ class MainTabBarVC: UITabBarController {
     fileprivate func setupViewControllers() {
         
         let layout = UICollectionViewFlowLayout()
-        let topRated = templateNavControllerVC(title: "Top Rated ", selectedImage: #imageLiteral(resourceName: "top-rated"), rootViewController: TopRatedMoviewVC(collectionViewLayout: layout))
+        
+        let topRated = templateNavControllerVC(title: "Top Rated ", selectedImage: #imageLiteral(resourceName: "top-rated"), rootViewController: HomeMoviesVC(collectionViewLayout: layout))
         let account = templateNavControllerVC(title: "Account", selectedImage: #imageLiteral(resourceName: "account"), rootViewController: AccountVC() )
         
         tabBar.tintColor = .black

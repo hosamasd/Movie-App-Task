@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct TopRatedModel: Codable {
+struct MovieModel: Codable {
     
     let results: [Result]
     let page, totalResults: Int

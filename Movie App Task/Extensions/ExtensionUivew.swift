@@ -326,7 +326,7 @@ So here is the simple extension to an array which will allow us to remove an ele
 
 extension Array where Element: Equatable {
     mutating func remove(_ element: Element) {
-        _ = index(of: element).flatMap {
+        _ = firstIndex(of: element).flatMap {
             self.remove(at: $0)
         }
     } }

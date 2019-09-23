@@ -21,8 +21,7 @@ class LoginVC: UIViewController {
     lazy var usernameTextField:CustomTextField = {
         let tf = CustomTextField(padding: 16, height: 50)
         //        tf.keyboardType = .emailAddress
-        tf.placeholder = "enter your email"
-        tf.text = "hosam_dsa"
+        tf.placeholder = "enter your username"
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         
         return tf
@@ -31,14 +30,11 @@ class LoginVC: UIViewController {
         let tf = CustomTextField(padding: 16, height: 50)
         tf.isSecureTextEntry = true
         tf.placeholder = "enter your password"
-        tf.text = "dsaasd321"
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     lazy var loginButton:UIButton = {
         let bt = UIButton(title: "Login", titleColor: .white, font: .systemFont(ofSize: 20, weight: .heavy), backgroundColor: .lightGray, target: self, action: #selector(handleLogin))
-        //        bt.setTitleColor(.gray, for: .disabled)
-        //        bt.isEnabled = false
         bt.backgroundColor = #colorLiteral(red: 0.8273344636, green: 0.09256268293, blue: 0.324395299, alpha: 1)
         bt.setTitleColor(.white, for: .normal)
         bt.layer.cornerRadius = 22
@@ -128,30 +124,23 @@ class LoginVC: UIViewController {
         guard let username = usernameTextField.text , !username.isEmpty,
             let passowrd = passwordTextField.text, !passowrd.isEmpty else {invalidInformation(message: "Empty fields Not Allowed!"); return  }
         
-        //        if isValid {
-        //            self.registerButton.backgroundColor = #colorLiteral(red: 0.8273344636, green: 0.09256268293, blue: 0.324395299, alpha: 1)
-        //            self.registerButton.setTitleColor(.white, for: .normal)
-        //        }else {
-        //            self.registerButton.backgroundColor = UIColor.lightGray
-        //            self.registerButton.setTitleColor(.gray, for: .normal)
-        //        }
         
-        Services.services.getAccessToken(username: username, password: passowrd) { [weak self] (token,err) in
-            if let err = err {
-                self?.errorInfo(err: err)
-            }
-            
-            guard let token = token else {self?.invalidInformation(message: "username or password is invalid!");self?.progressHUDs.dismiss();return}
-           self?.progressHUDs.dismiss()
-            
-            Defaults[.username] = username
-            Defaults[.password] = passowrd
-            Defaults[.islogin] = true
-            
-            let mainBar = MainTabBarVC()
-            
-            self?.present(mainBar, animated: true, completion: nil)
-        }
+////        Services.services.getAccessToken(username: username, password: passowrd) { [weak self] (token,err) in
+////            if let err = err {
+////                self?.errorInfo(err: err)
+////            }
+//        
+//            guard token != nil else {self?.invalidInformation(message: "username or password is invalid!");self?.progressHUDs.dismiss();return}
+//           self?.progressHUDs.dismiss()
+//            
+//            Defaults[.username] = username
+//            Defaults[.password] = passowrd
+//            Defaults[.islogin] = true
+//            
+//            let mainBar = MainTabBarVC()
+//            
+//            self?.present(mainBar, animated: true, completion: nil)
+//        }
         
     }
     

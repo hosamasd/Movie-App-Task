@@ -53,13 +53,13 @@ class AccountVC: UIViewController {
     //MARK:-User methods
     
     func checkInternet()  {
-        if Services.services.isInternetAvailable() {
-            // internet is find
-            getUserDetails()
-        }else {
-            // no internet
-            addTextUsingCachedDetails()
-        }
+//        if Services.services.isInternetAvailable() {
+//            // internet is find
+//            getUserDetails()
+//        }else {
+//            // no internet
+//            addTextUsingCachedDetails()
+//        }
     }
     
    fileprivate func setupViews()  {
@@ -77,14 +77,14 @@ class AccountVC: UIViewController {
     
   fileprivate  func getUserDetails()  {
         
-        Services.services.getUserInfo { [weak self] (user, err) in
-            guard let user = user else {return}
-            self?.user = user
-            DispatchQueue.main.async {
-                self?.addText(user)
-            }
-            
-        }
+//        Services.services.getUserInfo { [weak self] (user, err) in
+//            guard let user = user else {return}
+//            self?.user = user
+//            DispatchQueue.main.async {
+//                self?.addText(user)
+//            }
+//            
+//        }
     }
     
   fileprivate  func addText(_ user: UserDetailsModel)  {
@@ -103,7 +103,7 @@ class AccountVC: UIViewController {
   fileprivate  func addTextUsingCachedDetails()  {
         
         if let data = UserDefaults.standard.value(forKey: "userInfo") as? [String: Any] {
-             let urlString = "\(baseGravtarlink)\(user?.avatar.gravatar.hash))"
+            let urlString = "\(baseGravtarlink)\(String(describing: user?.avatar.gravatar.hash)))"
 ////            let urlString = "\(baseGravtarlink)\(String(describing: user?.avatar.gravatar.hash))"
 //            avatarUserImageView.loadImageUsingCacheWithUrlString(urlString)
             guard let url = URL(string: urlString) else { return  }
