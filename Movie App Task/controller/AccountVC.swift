@@ -67,7 +67,7 @@ class AccountVC: UIViewController {
         let mainLabels = [userIDLabel,userISOLabel,userISO2Label,userNameLabel,userAdultLabel,userNameInfoLabel]
         mainLabels.forEach({$0.constrainHeight(constant: 40)})
         
-        let mainStack = getStack(views: avatarUserImageView,userIDLabel,userISOLabel,userISO2Label,userNameLabel,userAdultLabel,userNameInfoLabel, spacing: 8, axis: .vertical)
+    let mainStack = getStack(views: avatarUserImageView,userIDLabel,userISOLabel,userISO2Label,userNameLabel,userAdultLabel,userNameInfoLabel, spacing: 8, distribution: .fillProportionally, axis: .vertical)
         mainStack.alignment = .center
         
         view.addSubview(mainStack)

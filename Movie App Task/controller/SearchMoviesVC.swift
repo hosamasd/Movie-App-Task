@@ -11,15 +11,21 @@ import UIKit
 class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     let cellID = "cellID"
     
-     let searchController = UISearchController(searchResultsController: nil)
+    let searchController = UISearchController(searchResultsController: nil)
     var moviesArray = [Results  ]()
     var timer:Timer?
+    
+    let mainLabel = UILabel(text: "please enter your movie name for searching...", font: .systemFont(ofSize: 24), textColor: .black, textAlignment: .center, numberOfLines: 2)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollections()
         setupNavigations()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -40,7 +46,9 @@ class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     func setupCollections()  {
         collectionView.backgroundColor = .white
+        collectionView.addSubview(mainLabel)
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellID)
+        mainLabel.anchor(top: collectionView.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 60, left: 16, bottom: 0, right: 16),size: .init(width: 0, height: 120))
     }
     
     func setupNavigations()  {
@@ -59,7 +67,7 @@ class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationItem.largeTitleDisplayMode = .always
     }
     
-  
+    
 }
 
 extension SearchMoviesVC: UISearchBarDelegate{
@@ -73,7 +81,7 @@ extension SearchMoviesVC: UISearchResultsUpdating{
         if searchController.searchBar.text == nil || searchController.searchBar.text!.isEmpty{
             view.endEditing(true)
             moviesArray.removeAll()
-             self.collectionView.reloadData()
+            self.reloadContents()
         }else {
             let text = searchController.searchBar.text!.lowercased()
             timer?.invalidate()
@@ -84,26 +92,26 @@ extension SearchMoviesVC: UISearchResultsUpdating{
                     }
                     guard let movi = movi else{return}
                     self.moviesArray = movi.results
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
                     
+                    self.reloadContents()
                 }
-                
-                
+            })
             
-//            filterUsers(text:text)
-        })
-//        collectionView.reloadData()
-           
-        
-    }
-        
-        
+        }
     }
     
-    func filterUsers(text:String)  {
-//        userResults = userArray.filter({$0.name.lowercased().range(of: text )  != nil})
+    func reloadContents()  {
+        DispatchQueue.main.async {
+            self.mainLabel.isHidden = self.moviesArray.count == 0 ? false : true
+            self.collectionView.reloadData()
+        }
     }
     
+}
+
+extension String {
+    func convertSpacingToValid() -> String {
+        return self.contains(" ") ? self : self.replacingOccurrences(of: " ", with: "%20")
+        
+    }
 }

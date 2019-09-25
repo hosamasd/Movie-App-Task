@@ -62,7 +62,6 @@ class Services {
         let urlString = "https://api.themoviedb.org/3/movie/latest?api_key=\(apiKey)&language=en-US"
         guard let urls = URL(string: urlString) else{return}
         makeGenericGet(url: urls, completion: completion)
-//        getInfoMovie(url: url, completion: completion)
     }
     
     func makeGenericGet<T:Codable>(url:URL,completion: @escaping (T?, Error?)->())  {
@@ -98,7 +97,8 @@ class Services {
     func getSearchedMovie(text: String,completion: @escaping ( MovieModel?,Error?)->())  {
         
         let url =  "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&language=en-US&query=\(text)&page=1&include_adult=false"
-        guard let urls = URL(string: url) else { return  }
+      guard  let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return  } //replace " " with "%20" in url
+        guard let urls = URL(string: urlString) else { return  }
         
      makeGenericGet(url: urls, completion: completion)
 
@@ -155,10 +155,10 @@ class Services {
     //
     //    func makeGenericPost(value: String,parameters: [String:Any],url:URL,completion: @escaping (String?, Error?)->())  {
     //        let headers = ["content-type": "application/json"]
-    //        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-    //            .responseJSON(completionHandler: { (res) in
-    //
-    //
+//            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+//                .responseJSON(completionHandler: { (res) in
+//
+//
 //                    switch res.result {
 //                    case .success:
 //                        let datas = res.result.value as? [String:Any]
@@ -180,11 +180,11 @@ class Services {
     //        guard let urls = URL( string: "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=9e4052475425b472866635831745fe22") else { return  }
     //
     //
-    //        let parameters:  [String : Any] = [
-    //            "username": username,
-    //            "password": password,
-    //            "request_token": request_Token ?? ""
-    //        ]
+//            let parameters:  [String : Any] = [
+//                "username": username,
+//                "password": password,
+//                "request_token": request_Token ?? ""
+//            ]
     //
     //        makeGenericPost(value: "request_token", parameters: parameters , url: urls, completion: completion)
     //
