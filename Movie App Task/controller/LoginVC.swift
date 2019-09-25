@@ -7,14 +7,11 @@
 //
 
 import UIKit
-import Alamofire
-import SwiftyUserDefaults
-import JGProgressHUD
+import ProgressHUD
 
 class LoginVC: UIViewController {
     
     
-    var progressHUDs = JGProgressHUD(style: .dark)
     
     fileprivate let apiKey = "9e4052475425b472866635831745fe22"
     let gradiantLayer = CAGradientLayer()
@@ -106,9 +103,8 @@ class LoginVC: UIViewController {
     }
     
     func errorInfo(err: Error)  {
-        progressHUDs.textLabel.text = err.localizedDescription
-            progressHUDs.show(in: self.view)
-        progressHUDs.dismiss(afterDelay: 3)
+       ProgressHUD.show(err.localizedDescription)
+    
     }
     //TODO:Handle methods
     
@@ -116,8 +112,8 @@ class LoginVC: UIViewController {
     
     @objc  func handleLogin()  {
         
-        progressHUDs.textLabel.text = "Please Wait....."
-        progressHUDs.show(in: self.view)
+//        progressHUDs.textLabel.text = "Please Wait....."
+//        progressHUDs.show(in: self.view)
         
         self.handleDismissKeyboard()
         
@@ -159,10 +155,10 @@ class LoginVC: UIViewController {
     
 }
 
-
-extension DefaultsKeys{
-    
-    static let username = DefaultsKey<String?>("username")
-    static let password = DefaultsKey<String?>("password")
-    static let islogin = DefaultsKey<Bool?>("islogin")
-}
+//
+//extension DefaultsKeys{
+//
+//    static let username = DefaultsKey<String?>("username")
+//    static let password = DefaultsKey<String?>("password")
+//    static let islogin = DefaultsKey<Bool?>("islogin")
+//}

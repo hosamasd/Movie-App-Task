@@ -11,18 +11,6 @@ import SDWebImage
 
 class MovieInformationVC: UIViewController {
     
-//    var movieDetails:Results! {
-//        didSet{
-//            guard let url = URL(string: "http://image.tmdb.org/t/p/original/\(movieDetails.posterPath)") else { return }
-//            movieImageView.sd_setImage(with: url)
-//            movieTitleLabel.text = movieDetails.title
-//            voteAverageLabel.text = "Vote average: \(movieDetails.voteAverage)"
-//            releaseDateLabel.text = "Release date: \(movieDetails.releaseDate)"
-//            popularityLabel.text = "Popularity: \(movieDetails.popularity)"
-//            adultInfoLabel.text = "Adult Info: \(movieDetails.adult == true ? "Yes" : "No" )"
-//            overviewLabel.text = "Overview : \(movieDetails.overview)"
-//        }
-//    }
     fileprivate let movieDetails:Results
     
     init(movieRes:Results) {
@@ -40,16 +28,16 @@ class MovieInformationVC: UIViewController {
         im.contentMode = .scaleAspectFill
         im.clipsToBounds = true
         im.layer.cornerRadius = 8
-        im.constrainHeight(constant: 200)
+        im.constrainHeight(constant: 250)
         return im
     }()
-    let movieTitleLabel = UILabel(text: "ovie title", font: .systemFont(ofSize: 20), textColor: .black, textAlignment: .center)
-    let voteAverageLabel = UILabel(text: "vote average", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
-    let releaseDateLabel = UILabel(text: "release date", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
+    let movieTitleLabel = UILabel(text: " ", font: .systemFont(ofSize: 20), textColor: .black, textAlignment: .center)
+    let voteAverageLabel = UILabel(text: " ", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
+    let releaseDateLabel = UILabel(text: "", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
     
-    let popularityLabel = UILabel(text: "ovie adultInfoLabel", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
-    let adultInfoLabel = UILabel(text: "vote popularityLabel", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
-    let overviewLabel = UILabel(text: "release overviewLabel", font: .systemFont(ofSize: 16), textColor: .black, numberOfLines: 0)
+    let popularityLabel = UILabel(text: "", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
+    let adultInfoLabel = UILabel(text: "", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center)
+    let overviewLabel = UILabel(text: "", font: .systemFont(ofSize: 16), textColor: .black, numberOfLines: 0)
     
     
     
@@ -57,14 +45,13 @@ class MovieInformationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setupNavigations()
         loadData()
         
     }
     
     //MARK:-User methods
     
-   fileprivate func setupViews()  {
+    fileprivate func setupViews()  {
         let mainLabels = [movieTitleLabel,voteAverageLabel,releaseDateLabel,popularityLabel,adultInfoLabel]
         mainLabels.forEach({$0.constrainHeight(constant: 30)})
         
@@ -78,9 +65,7 @@ class MovieInformationVC: UIViewController {
         
     }
     
-    func setupNavigations()  {
-    }
-  
+    
     func loadData()  {
         guard let url = URL(string: "http://image.tmdb.org/t/p/original/\(movieDetails.posterPath)") else { return }
         movieImageView.sd_setImage(with: url)

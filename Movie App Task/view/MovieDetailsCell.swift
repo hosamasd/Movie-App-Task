@@ -30,20 +30,20 @@ class MovieDetailsCell: BaseCell {
         im.constrainHeight(constant: 150)
         return im
     }()
-    let movieTitleLabel = UILabel(text: "ovie title", font: .systemFont(ofSize: 16), textColor: .black  )
-    let movieOverviewLabel = UILabel(text: "overview\n fbf", font: .systemFont(ofSize: 16), textColor: .black, numberOfLines: 2)
+    let movieTitleLabel = UILabel(text: "", font: .systemFont(ofSize: 24), textColor: .black  )
+    let movieOverviewLabel = UILabel(text: "", font: .systemFont(ofSize: 20), textColor: .lightGray, numberOfLines: 3)
     
     
     let seperatoView:UIView = {
        let vi = UIView(backgroundColor: .gray)
-        vi.constrainHeight(constant: 3)
+        vi.constrainHeight(constant: 1)
         return vi
     }()
     
    
     override func setupViews()  {
         backgroundColor = .white
-       stack(movieImageView,movieTitleLabel,movieOverviewLabel,seperatoView, spacing: 4).withMargins(.init(top: 4, left: 8, bottom: 4, right: 0))
+       stack(movieImageView,movieTitleLabel,movieOverviewLabel,seperatoView, spacing: 4).withMargins(.init(top: 4, left: 8, bottom: 0, right: 0))
         
         
     }

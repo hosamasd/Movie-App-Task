@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import SystemConfiguration
 
 class Services {
@@ -42,7 +41,6 @@ class Services {
        
         guard let urls = URL(string: urlString) else{return}
          makeGenericGet(url: urls, completion: completion)
-//        getInfoMovie(url: urlString, completion: completion)
        
     }
     
@@ -55,7 +53,6 @@ class Services {
          let urlString = "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)&language=en-US&page=1"
         guard let urls = URL(string: urlString) else{return}
         makeGenericGet(url: urls, completion: completion)
-//        getInfoMovie(url: urlString, completion: completion)
     }
     
     func fetchLatest(completion: @escaping ( MovieModel?,Error?)->())  {
@@ -88,7 +85,6 @@ class Services {
             }
             }.resume()
     }
-//
     
     
     
@@ -106,29 +102,6 @@ class Services {
         
     }
     
-    
-    
-//    // check internet avaiable or not
-//    func isInternetAvailable() -> Bool
-//    {
-//        var zeroAddress = sockaddr_in()
-//        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-//        zeroAddress.sin_family = sa_family_t(AF_INET)
-//
-//        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
-//            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
-//                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
-//            }
-//        }
-//
-//        var flags = SCNetworkReachabilityFlags()
-//        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-//            return false
-//        }
-//        let isReachable = flags.contains(.reachable)
-//        let needsConnection = flags.contains(.connectionRequired)
-//        return (isReachable && !needsConnection)
-//    }
     
     
     //    func getAccessToken(username:String,password:String,completion: @escaping (String?, Error?)->())  {

@@ -6,8 +6,6 @@ target 'Movie App Task' do
   use_frameworks!
 
   # Pods for Movie App Task
-pod 'Alamofire'
 pod 'SDWebImage'
-pod 'JGProgressHUD'
-pod 'SwiftyUserDefaults'
+pod 'ProgressHUD'
 end

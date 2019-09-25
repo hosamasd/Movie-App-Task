@@ -36,7 +36,6 @@
 		4EA9AA3D22FE83DE003C4492 /* MovieDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA9AA3C22FE83DE003C4492 /* MovieDetailsCell.swift */; };
 		4EA9AA3F22FE92F1003C4492 /* MovieInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA9AA3E22FE92F1003C4492 /* MovieInformationVC.swift */; };
 		4EAE4F6A233B8F410088FB06 /* ExtensionUivew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAE4F69233B8F410088FB06 /* ExtensionUivew.swift */; };
-		4EB351E323014753008B417C /* ImageCaching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB351E223014753008B417C /* ImageCaching.swift */; };
 		4EB351E523014AE4008B417C /* DataCaching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB351E423014AE4008B417C /* DataCaching.swift */; };
 		4EFD6092233B772000AF928A /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFD6091233B772000AF928A /* SearchCell.swift */; };
 /* End PBXBuildFile section */
@@ -72,7 +71,6 @@
 		4EA9AA3C22FE83DE003C4492 /* MovieDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsCell.swift; sourceTree = "<group>"; };
 		4EA9AA3E22FE92F1003C4492 /* MovieInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInformationVC.swift; sourceTree = "<group>"; };
 		4EAE4F69233B8F410088FB06 /* ExtensionUivew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtensionUivew.swift; path = "../../../../../ios tutorial/ExtensionUivew.swift"; sourceTree = "<group>"; };
-		4EB351E223014753008B417C /* ImageCaching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCaching.swift; sourceTree = "<group>"; };
 		4EB351E423014AE4008B417C /* DataCaching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCaching.swift; sourceTree = "<group>"; };
 		4EFD6091233B772000AF928A /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		987ADFEC302C15A1FC9A0AC1 /* Pods-Movie App Task.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie App Task.release.xcconfig"; path = "Target Support Files/Pods-Movie App Task/Pods-Movie App Task.release.xcconfig"; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				4EAE4F69233B8F410088FB06 /* ExtensionUivew.swift */,
-				4EB351E223014753008B417C /* ImageCaching.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -368,7 +365,6 @@
 				4E3714A22309A91400FD0BAA /* LatestCell.swift in Sources */,
 				4E08D8BA23096AAD0081DBE9 /* PopluarCell.swift in Sources */,
 				4E8EC7EA233916050071B672 /* SearchMoviesVC.swift in Sources */,
-				4EB351E323014753008B417C /* ImageCaching.swift in Sources */,
 				4EAE4F6A233B8F410088FB06 /* ExtensionUivew.swift in Sources */,
 				4EA9AA3F22FE92F1003C4492 /* MovieInformationVC.swift in Sources */,
 				4E08D8B823096A8B0081DBE9 /* NowPlayingCell.swift in Sources */,

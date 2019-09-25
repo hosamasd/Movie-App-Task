@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     let cellID = "cellID"
@@ -24,9 +25,6 @@ class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLay
         setupNavigations()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return moviesArray.count
@@ -50,6 +48,8 @@ class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLay
         newVC.navigationItem.title = result.title
         self.navigationController?.pushViewController(newVC, animated: true)
     }
+    
+    //MARK:-User methods
     
     func setupCollections()  {
         collectionView.backgroundColor = .white
@@ -77,6 +77,8 @@ class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLay
     
 }
 
+//MARK:-extension
+
 extension SearchMoviesVC: UISearchBarDelegate{
     
     
@@ -90,12 +92,13 @@ extension SearchMoviesVC: UISearchResultsUpdating{
             moviesArray.removeAll()
             self.reloadContents()
         }else {
+            ProgressHUD.show("please wait for searching.....")
             let text = searchController.searchBar.text!.lowercased()
             timer?.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (time) in
                 Services.services.getSearchedMovie(text: text) { (movi, err) in
-                    if let err = err {
-                        print(err.localizedDescription);return
+                    if err != nil {
+                        ProgressHUD.dismiss() ;return
                     }
                     guard let movi = movi else{return}
                     self.moviesArray = movi.results
@@ -108,6 +111,7 @@ extension SearchMoviesVC: UISearchResultsUpdating{
     }
     
     func reloadContents()  {
+        ProgressHUD.dismiss()
         DispatchQueue.main.async {
             self.mainLabel.isHidden = self.moviesArray.count == 0 ? false : true
             self.collectionView.reloadData()
@@ -116,9 +120,3 @@ extension SearchMoviesVC: UISearchResultsUpdating{
     
 }
 
-extension String {
-    func convertSpacingToValid() -> String {
-        return self.contains(" ") ? self : self.replacingOccurrences(of: " ", with: "%20")
-        
-    }
-}

@@ -11,9 +11,9 @@ import UIKit
 class MovieListHorizentalVC:  SnappingHorizentalVC  {
     
     fileprivate let cellId = "cellId"
-
+    
     var movieArray:MovieModel?
-     var handleIndexSelected:((Results) -> ())?
+    var handleIndexSelected:((Results) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,19 +44,6 @@ class MovieListHorizentalVC:  SnappingHorizentalVC  {
     }
     
     
-    func getMovies(err:Error?,movie:MovieModel?)  {
-        if let err = err {
-            print(err.localizedDescription)
-            return
-        }
-        
-        guard let movies = movie?.results else {return}
-        //        self.movieArray = movies
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-}
-
     fileprivate func setupCollectionView() {
         collectionView.backgroundColor = .white
         

@@ -26,7 +26,7 @@ class MainTabBarVC: UITabBarController {
         
         let layout = UICollectionViewFlowLayout()
         
-        let topRated = templateNavControllerVC(title: "Top Rated ", selectedImage: #imageLiteral(resourceName: "top-rated"), rootViewController: HomeMoviesVC(collectionViewLayout: layout))
+        let categories = templateNavControllerVC(title: "Categories ", selectedImage: #imageLiteral(resourceName: "top-rated"), rootViewController: HomeMoviesVC(collectionViewLayout: layout))
 //        let account = templateNavControllerVC(title: "Account", selectedImage: #imageLiteral(resourceName: "account"), rootViewController: AccountVC() )
          let search = templateNavControllerVC(title: "Search", selectedImage: #imageLiteral(resourceName: "account"), rootViewController: SearchMoviesVC(collectionViewLayout: layout) )
         
@@ -34,7 +34,7 @@ class MainTabBarVC: UITabBarController {
         
         viewControllers = [
            search ,
-           topRated
+           categories
         ]
         
         guard let items = tabBar.items else { return }
