@@ -329,7 +329,30 @@ extension Array where Element: Equatable {
         _ = firstIndex(of: element).flatMap {
             self.remove(at: $0)
         }
-    } }
+    }
+    
+   
+        
+        @discardableResult mutating func remove(object: Element) -> Bool {
+            if let index = firstIndex(of: object) {
+                self.remove(at: index)
+                return true
+            }
+            return false
+        }
+        
+        @discardableResult mutating func remove(where predicate: (Array.Iterator.Element) -> Bool) -> Bool {
+            if let index = self.firstIndex(where: { (element) -> Bool in
+                return predicate(element)
+            }) {
+                self.remove(at: index)
+                return true
+            }
+            return false
+        }
+        
+    
+}
 extension Int {
     var factorial: Int {
         return (1..<self+1).reduce(1, *)

@@ -50,6 +50,12 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         cell.titleLabel.text = dummyTitleHeader[indexPath.item]
         cell.horizentalCollectionView.movieArray = movie
         cell.horizentalCollectionView.collectionView.reloadData()
+        cell.horizentalCollectionView.handleIndexSelected = { [weak self] res in
+            let newVC = MovieInformationVC(movieRes: res)
+            newVC.navigationItem.title = res.title
+            print(res.id)
+            self?.navigationController?.pushViewController(newVC, animated: true)
+        }
         return cell
     }
     

@@ -11,17 +11,27 @@ import SDWebImage
 
 class MovieInformationVC: UIViewController {
     
-    var movieDetails:Results! {
-        didSet{
-            guard let url = URL(string: "http://image.tmdb.org/t/p/original/\(movieDetails.posterPath)") else { return }
-            movieImageView.sd_setImage(with: url)
-            movieTitleLabel.text = movieDetails.title
-            voteAverageLabel.text = "Vote average: \(movieDetails.voteAverage)"
-            releaseDateLabel.text = "Release date: \(movieDetails.releaseDate)"
-            popularityLabel.text = "Popularity: \(movieDetails.popularity)"
-            adultInfoLabel.text = "Adult Info: \(movieDetails.adult == true ? "Yes" : "No" )"
-            overviewLabel.text = "Overview : \(movieDetails.overview)"
-        }
+//    var movieDetails:Results! {
+//        didSet{
+//            guard let url = URL(string: "http://image.tmdb.org/t/p/original/\(movieDetails.posterPath)") else { return }
+//            movieImageView.sd_setImage(with: url)
+//            movieTitleLabel.text = movieDetails.title
+//            voteAverageLabel.text = "Vote average: \(movieDetails.voteAverage)"
+//            releaseDateLabel.text = "Release date: \(movieDetails.releaseDate)"
+//            popularityLabel.text = "Popularity: \(movieDetails.popularity)"
+//            adultInfoLabel.text = "Adult Info: \(movieDetails.adult == true ? "Yes" : "No" )"
+//            overviewLabel.text = "Overview : \(movieDetails.overview)"
+//        }
+//    }
+    fileprivate let movieDetails:Results
+    
+    init(movieRes:Results) {
+        self.movieDetails = movieRes
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     let movieImageView:UIImageView = {
@@ -47,6 +57,9 @@ class MovieInformationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupNavigations()
+        loadData()
+        
     }
     
     //MARK:-User methods
@@ -63,6 +76,20 @@ class MovieInformationVC: UIViewController {
         
         mainStack.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 16, left: 8, bottom: 0, right: 8))
         
+    }
+    
+    func setupNavigations()  {
+    }
+  
+    func loadData()  {
+        guard let url = URL(string: "http://image.tmdb.org/t/p/original/\(movieDetails.posterPath)") else { return }
+        movieImageView.sd_setImage(with: url)
+        movieTitleLabel.text = movieDetails.title
+        voteAverageLabel.text = "Vote average: \(movieDetails.voteAverage)"
+        releaseDateLabel.text = "Release date: \(movieDetails.releaseDate)"
+        popularityLabel.text = "Popularity: \(movieDetails.popularity)"
+        adultInfoLabel.text = "Adult Info: \(movieDetails.adult == true ? "Yes" : "No" )"
+        overviewLabel.text = "Overview : \(movieDetails.overview)"
     }
     
     

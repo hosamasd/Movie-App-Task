@@ -27,13 +27,14 @@ class MainTabBarVC: UITabBarController {
         let layout = UICollectionViewFlowLayout()
         
         let topRated = templateNavControllerVC(title: "Top Rated ", selectedImage: #imageLiteral(resourceName: "top-rated"), rootViewController: HomeMoviesVC(collectionViewLayout: layout))
-        let account = templateNavControllerVC(title: "Account", selectedImage: #imageLiteral(resourceName: "account"), rootViewController: AccountVC() )
+//        let account = templateNavControllerVC(title: "Account", selectedImage: #imageLiteral(resourceName: "account"), rootViewController: AccountVC() )
+         let search = templateNavControllerVC(title: "Search", selectedImage: #imageLiteral(resourceName: "account"), rootViewController: SearchMoviesVC(collectionViewLayout: layout) )
         
         tabBar.tintColor = .black
         
         viewControllers = [
-            topRated,
-            account
+           search ,
+           topRated
         ]
         
         guard let items = tabBar.items else { return }

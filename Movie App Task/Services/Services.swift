@@ -95,6 +95,16 @@ class Services {
          getInfoMovie(url: topRated, completion: completion)
     }
     
+    func getSearchedMovie(text: String,completion: @escaping ( MovieModel?,Error?)->())  {
+        
+        let url =  "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&language=en-US&query=\(text)&page=1&include_adult=false"
+        guard let urls = URL(string: url) else { return  }
+        
+     makeGenericGet(url: urls, completion: completion)
+
+        
+    }
+    
     
     
 //    // check internet avaiable or not
@@ -149,21 +159,21 @@ class Services {
     //            .responseJSON(completionHandler: { (res) in
     //
     //
-    //                switch res.result {
-    //                case .success:
-    //                    let datas = res.result.value as? [String:Any]
-    //                    if datas?["success"] as? Bool ==  true{
-    //                    guard let values = datas?["\(value)"] as? String else {return}
-    //                    print("my token is ",values)
-    //                    completion(values,nil)
-    //                    }else  {
-    //                        completion(nil, nil)
-    //                    }
-    //                case .failure(let err):
-    //                    print(err)
-    //                    completion(nil,err)
-    //                }
-    //            })
+//                    switch res.result {
+//                    case .success:
+//                        let datas = res.result.value as? [String:Any]
+//                        if datas?["success"] as? Bool ==  true{
+//                        guard let values = datas?["\(value)"] as? String else {return}
+//                        print("my token is ",values)
+//                        completion(values,nil)
+//                        }else  {
+//                            completion(nil, nil)
+//                        }
+//                    case .failure(let err):
+//                        print(err)
+//                        completion(nil,err)
+//                    }
+//                })
     //    }
     //
     //    func validateLogin(request_Token:String? = "",username:String,password:String,completion: @escaping (String?, Error?)->())  {
