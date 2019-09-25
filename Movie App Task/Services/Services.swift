@@ -64,6 +64,12 @@ class Services {
         makeGenericGet(url: urls, completion: completion)
     }
     
+    func getTopRatedMovies(completion: @escaping ( MovieModel?,Error?)->())  {
+        let topRated = "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)&language=en-US&page=1"
+         guard let urls = URL(string:   topRated) else{return}
+         makeGenericGet(url: urls, completion: completion)
+    }
+    
     func makeGenericGet<T:Codable>(url:URL,completion: @escaping (T?, Error?)->())  {
 
         URLSession.shared.dataTask(with: url) { (data, res, err) in
@@ -87,12 +93,7 @@ class Services {
     
     
     
-    func getTopRatedMovies(completion: @escaping ( MovieModel?,Error?)->())  {
-        let topRated = "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)&language=en-US&page=1"
-//        guard let url = URL(string: topRated) else { return  }
-//        makeGenericGet(url: url, completion: completion)
-         getInfoMovie(url: topRated, completion: completion)
-    }
+   
     
     func getSearchedMovie(text: String,completion: @escaping ( MovieModel?,Error?)->())  {
         

@@ -44,6 +44,13 @@ class SearchMoviesVC: UICollectionViewController,UICollectionViewDelegateFlowLay
         return .init(width: view.frame.width, height: 200)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let result = moviesArray[indexPath.item]
+        let newVC = MovieInformationVC(movieRes: result)
+        newVC.navigationItem.title = result.title
+        self.navigationController?.pushViewController(newVC, animated: true)
+    }
+    
     func setupCollections()  {
         collectionView.backgroundColor = .white
         collectionView.addSubview(mainLabel)

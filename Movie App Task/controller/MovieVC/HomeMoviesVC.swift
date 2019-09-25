@@ -19,8 +19,7 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     let popular = "popular"
      let topRated = "topRated"
     let latest = "latest"
-    var moviesRatedArray = [Results]()
-    var dummyTitleHeader = ["Now Playing","UpComing","Popular","Top Rated","Latest"]
+    var dummyTitleHeader = ["Now Playing","UpComing","Popular","Top Rated"]
     
     var moviesArrayResults = [MovieModel]()
     
@@ -65,7 +64,7 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         var group1:MovieModel?
         var group2:MovieModel?
         var group3:MovieModel?
-//        var group4:MovieModel?
+        var group4:MovieModel?
 
         let disptachGroup = DispatchGroup()
 
@@ -91,13 +90,12 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
 
 
-//        disptachGroup.enter()
-//        print(32432)
-//        Services.services.fetchLatest { (movie, err) in
-//            disptachGroup.leave()
-//
-//            group4 = movie
-//        }
+        disptachGroup.enter()
+        Services.services.getTopRatedMovies { (movie, err) in
+            disptachGroup.leave()
+
+            group4 = movie
+        }
 
 
         // when finish
@@ -114,9 +112,9 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             if let group = group3 {
                 self.moviesArrayResults.append(group)
             }
-//            if let group = group4 {
-//                self.moviesArrayResults.append(group)
-//            }
+            if let group = group4 {
+                self.moviesArrayResults.append(group)
+            }
 
             self.collectionView.reloadData()
         }
@@ -132,7 +130,7 @@ class HomeMoviesVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     fileprivate  func setupCollection()  {
         collectionView.backgroundColor = .white
-        collectionView.contentInset.top = 8
+//        collectionView.contentInset.top = 8
         
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
