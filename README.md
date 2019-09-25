@@ -1,7 +1,7 @@
 # Movie-App-Task
 Simple movie app that use TMDb Api for reteriving simple data.
+ TMDb Api Url :   https://developers.themoviedb.org/3![search](https://user-images.githubusercontent.com/34996617/65610624-e8d52900-dfb1-11e9-90d1-03d041aac8d8.png)
+![result](https://user-images.githubusercontent.com/34996617/65610626-e8d52900-dfb1-11e9-88bd-94f9dee410ac.png)
+![categroies](https://user-images.githubusercontent.com/34996617/65610627-e8d52900-dfb1-11e9-86e1-a754fd7cca57.png)
+![detail](https://user-images.githubusercontent.com/34996617/65610629-e96dbf80-dfb1-11e9-8ab3-966ab970399b.png)
 
-![login](https://user-images.githubusercontent.com/34996617/62853722-76540680-bced-11e9-902f-032637e332d2.png)
-![top rated](https://user-images.githubusercontent.com/34996617/62853730-7bb15100-bced-11e9-9655-d0c3bbc0455c.png)
-![account](https://user-images.githubusercontent.com/34996617/62853733-7fdd6e80-bced-11e9-9229-4670f08cd3a2.png)
-![detail movie](https://user-images.githubusercontent.com/34996617/62853734-80760500-bced-11e9-8e79-1a897b68ee27.png)
